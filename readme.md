@@ -10,14 +10,14 @@ mockoon `dateTimeShift` format.
 ### Before
 ```json
 {
-  "item": "2024-04-18"
+  "item": "2000-01-01"
 }
 ```
 
 ### After
 ```json
 {
-  "item": "{{dateTimeShift date=now format='yyyy-MM-dd' years=-1 months=-1 days=-14 hours=0 minutes=0 seconds=0}}"
+  "item": "{{dateTimeShift date=now format='yyyy-MM-dd' years=-24 months=-3 days=-16 hours=0 minutes=0 seconds=0}}"
 }
 ```
 

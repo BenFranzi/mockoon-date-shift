@@ -12,6 +12,10 @@ function convert(target, dateToCompare) {
 
   let gap = intervalToDuration({start, end: dateToCompare});
 
+  gap.years = gap.years || 0;
+  gap.months = gap.months || 0;
+  gap.days = gap.days || 0;
+
   if (isBefore(start, dateToCompare)) {
     gap = Object.entries(gap).reduce((acc, [key, value]) => ({ ...acc, [key]: -1 * value}), {})
   }
