@@ -1,0 +1,56 @@
+{
+  "name": "mockoon-date-shift",
+  "version": "0.1.0",
+  "description": "cli tool to shift dates in json files for mockoon",
+  "type": "module",
+  "license": "MIT",
+  "homepage": "https://github.com/BenFranzi/mockoon-date-shift",
+  "bugs": {
+    "url": "https://github.com/BenFranzi/mockoon-date-shift/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenFranzi/mockoon-date-shift.git"
+  },
+  "scripts": {
+    "start": "build/bin.cjs",
+    "dev": "node --experimental-specifier-resolution=node --loader ts-node/esm src/bin.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*",
+    "build": "node --experimental-specifier-resolution=node --loader ts-node/esm build.ts",
+    "deploy": "npm publish --access public",
+    "local:link": "npm link",
+    "local:unlink": "npm unlink mockoon-date-shift && npm rm --global mockoon-date-shift"
+  },
+  "bin": {
+    "mockoon-date-shift": "build/bin.cjs"
+  },
+  "files": [
+    "build/bin.cjs"
+  ],
+  "devDependencies": {
+    "@bengineer.dev/eslint-config-core": "^1.0.3",
+    "@jest/globals": "^29.7.0",
+    "@swc/core": "^1.4.11",
+    "@swc/jest": "^0.2.36",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.12.3",
+    "@typescript-eslint/parser": "^7.5.0",
+    "esbuild": "0.20.2",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(t|j)sx?$": "@swc/jest"
+    }
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "date-fns": "^3.6.0"
+  }
+}
