@@ -10,6 +10,10 @@ function isValidDateString(raw) {
 function convert(target, dateToCompare) {
   const start = new Date(target);
 
+  if (Math.abs(start.getFullYear() - (new Date()).getFullYear()) > 200) {
+    return target;
+  }
+
   let gap = intervalToDuration({start, end: dateToCompare});
 
   gap.years = gap.years || 0;
@@ -51,5 +55,5 @@ function traverse(node) {
 export default async function process(raw: string, comparisonDate: Date): Promise<string> {
   return JSON.stringify(traverse(JSON.parse(raw)), null, 2)
     .replaceAll('{{SINGLE_QUOTE}}', "'")
-    .replaceAll('{{QUOTE}}', '"');
+    .replaceAll('{{DOUBLE_QUOTE}}', '"');
 }
