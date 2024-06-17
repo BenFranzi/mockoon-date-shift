@@ -33,7 +33,7 @@ function convert(options: Options, target) {
 
 function traverse(options: Options, node) {
   if (Array.isArray(node)) {
-    return node.map(traverse);
+    return node.map((item) => traverse(options, item));
   }
   if (typeof node === 'string' && Boolean(node) && isValidDateString(node)) {
     return convert(options, node);
