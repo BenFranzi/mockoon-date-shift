@@ -14,15 +14,11 @@ function convert(options: Options, target) {
     return target;
   }
 
-  let gap = intervalToDuration({start, end: options.comparisonDate});
+  const gap = intervalToDuration({start: options.comparisonDate, end: start});
 
   gap.years = gap.years || 0;
   gap.months = gap.months || 0;
   gap.days = gap.days || 0;
-
-  if (isBefore(start, options.comparisonDate)) {
-    gap = Object.entries(gap).reduce((acc, [key, value]) => ({ ...acc, [key]: -1 * value}), {})
-  }
 
   if (target.split('').includes('Z')) {
     return `{{dateTimeShift date=now format={{DOUBLE_QUOTE}}yyyy-MM-dd'T'00:00:00'Z{{DOUBLE_QUOTE}} years=${gap.years} months=${gap.months} days=${gap.days} hours=0 minutes=0 seconds=0}}`
