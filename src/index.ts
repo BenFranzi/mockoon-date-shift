@@ -7,20 +7,20 @@ function isValidDateString(raw) {
   return !(isInvalidDate || hasNotEnoughDashes);
 }
 
-function convert(target, dateToCompare) {
+function convert(options: Options, target) {
   const start = new Date(target);
 
   if (Math.abs(start.getFullYear() - (new Date()).getFullYear()) > 200) {
     return target;
   }
 
-  let gap = intervalToDuration({start, end: dateToCompare});
+  let gap = intervalToDuration({start, end: options.comparisonDate});
 
   gap.years = gap.years || 0;
   gap.months = gap.months || 0;
   gap.days = gap.days || 0;
 
-  if (isBefore(start, dateToCompare)) {
+  if (isBefore(start, options.comparisonDate)) {
     gap = Object.entries(gap).reduce((acc, [key, value]) => ({ ...acc, [key]: -1 * value}), {})
   }
 
@@ -31,29 +31,26 @@ function convert(target, dateToCompare) {
   return `{{dateTimeShift date=now format={{SINGLE_QUOTE}}yyyy-MM-dd{{SINGLE_QUOTE}} years=${gap.years} months=${gap.months} days=${gap.days} hours=0 minutes=0 seconds=0}}`
 }
 
-
-const comparisonDate = new Date();
-
-function traverse(node) {
+function traverse(options: Options, node) {
   if (Array.isArray(node)) {
     return node.map(traverse);
   }
   if (typeof node === 'string' && Boolean(node) && isValidDateString(node)) {
-    return convert(node, comparisonDate);
+    return convert(options, node);
   }
   if (node === null || node === undefined) {
     return node;
   }
   if (typeof node === 'object') {
-    return Object.entries(node).reduce((acc, [key, value]) => ({...acc, [key]: traverse(value)}), {}); // TODO: Uplift this line
+    return Object.entries(node).reduce((acc, [key, value]) => ({...acc, [key]: traverse(options, value)}), {}); // TODO: Uplift this line
   }
 
   return node;
 }
 
 
-export default async function process(raw: string, comparisonDate: Date): Promise<string> {
-  return JSON.stringify(traverse(JSON.parse(raw)), null, 2)
+export default async function convertDates(options: Options, raw: string): Promise<string> {
+  return JSON.stringify(traverse(options, JSON.parse(raw)), null, 2)
     .replaceAll('{{SINGLE_QUOTE}}', "'")
     .replaceAll('{{DOUBLE_QUOTE}}', '"');
 }
