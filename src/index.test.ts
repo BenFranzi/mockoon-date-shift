@@ -24,9 +24,9 @@ const expected = `{
   "outOfRangePastWithTime": "1823-03-05T11:45:00Z",
   "outOfRangeFutureWithTime": "2225-03-05T11:45:00Z",
   "normalDateShift": "{{dateTimeShift date=now format='yyyy-MM-dd' years=0 months=-3 days=-1 hours=0 minutes=0 seconds=0}}",
-  "normalDateShiftWithTime": "{{dateTimeShift date=now format="yyyy-MM-dd'T'00:00:00'Z" years=0 months=-3 days=-1 hours=0 minutes=0 seconds=0}}",
+  "normalDateShiftWithTime": "{{dateTimeShift date=now format="yyyy-MM-dd'T'11:45:00'Z" years=0 months=-3 days=-1 hours=0 minutes=0 seconds=0}}",
   "normalDateShiftForwards": "{{dateTimeShift date=now format='yyyy-MM-dd' years=0 months=8 days=26 hours=0 minutes=0 seconds=0}}",
-  "normalDateShiftWithTimeForwards": "{{dateTimeShift date=now format="yyyy-MM-dd'T'00:00:00'Z" years=0 months=8 days=26 hours=0 minutes=0 seconds=0}}"
+  "normalDateShiftWithTimeForwards": "{{dateTimeShift date=now format="yyyy-MM-dd'T'11:45:00'Z" years=0 months=8 days=26 hours=0 minutes=0 seconds=0}}"
 }`
 
 describe(convertDates, () => {

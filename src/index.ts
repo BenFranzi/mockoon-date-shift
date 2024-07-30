@@ -7,6 +7,8 @@ function isValidDateString(raw) {
   return !(isInvalidDate || hasNotEnoughDashes);
 }
 
+const captureTZ = /T(.*?)Z/;
+
 function convert(options: Options, target) {
   const start = new Date(target);
 
@@ -21,7 +23,9 @@ function convert(options: Options, target) {
   gap.days = gap.days || 0;
 
   if (target.split('').includes('Z')) {
-    return `{{dateTimeShift date=now format={{DOUBLE_QUOTE}}yyyy-MM-dd'T'00:00:00'Z{{DOUBLE_QUOTE}} years=${gap.years} months=${gap.months} days=${gap.days} hours=0 minutes=0 seconds=0}}`
+    const tz = captureTZ.test(target) ? target.match(captureTZ).at(1) : '00:00:00';
+
+    return `{{dateTimeShift date=now format={{DOUBLE_QUOTE}}yyyy-MM-dd'T'${tz}'Z{{DOUBLE_QUOTE}} years=${gap.years} months=${gap.months} days=${gap.days} hours=0 minutes=0 seconds=0}}`
   }
 
   return `{{dateTimeShift date=now format={{SINGLE_QUOTE}}yyyy-MM-dd{{SINGLE_QUOTE}} years=${gap.years} months=${gap.months} days=${gap.days} hours=0 minutes=0 seconds=0}}`
